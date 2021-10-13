@@ -1,0 +1,16 @@
+''' Plot a Shifted Correlation Matrix '''
+# Diagonal correlation is always unity & less relevant, shifted variant shows only relevant cases
+def corrMat(df,id=False):
+    
+    corr_mat = df.corr().round(2)
+    f, ax = plt.subplots(figsize=(12,7))
+    mask = np.triu(np.ones_like(corr_mat, dtype=bool))
+    mask = mask[1:,:-1]
+    corr = corr_mat.iloc[1:,:-1].copy()
+    sns.heatmap(corr,mask=mask,vmin=-0.3,vmax=0.3,center=0, 
+                cmap='RdPu_r',square=False,lw=2,annot=True,cbar=False)
+#     bottom, top = ax.get_ylim() 
+#     ax.set_ylim(bottom + 0.5, top - 0.5) 
+    ax.set_title('Shifted Linear Correlation Matrix')
+    
+corrMat(df)
